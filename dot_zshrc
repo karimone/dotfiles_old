@@ -1,0 +1,238 @@
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/karim/.zshrc'
+
+autoload -Uz compinit promptinit
+compinit
+promptinit
+# End of lines added by compinstall
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt autocd
+unsetopt beep
+bindkey -v
+export KEYTIMEOUT=1
+# End of lines configured by zsh-newuser-install
+#
+#
+#
+# Path to your oh-my-zsh installation.
+ZSH=/usr/share/oh-my-zsh/
+
+export DEFAULT_USER="karim"
+export TERM="xterm-256color"
+export ZSH=/usr/share/oh-my-zsh
+export EDITOR=nvim
+
+ZSH_THEME="powerlevel10k/powerlevel10k"
+POWERLEVEL9K_MODE="nerdfont-complete"
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+
+POWERLEVEL9K_FOLDER_ICON=""
+POWERLEVEL9K_HOME_SUB_ICON="$(print_icon "HOME_ICON")"
+POWERLEVEL9K_DIR_PATH_SEPARATOR=" $(print_icon "LEFT_SUBSEGMENT_SEPARATOR") "
+
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=0
+POWERLEVEL9K_DIR_OMIT_FIRST_CHARACTER=true
+
+POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND='black'
+POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND='178'
+
+POWERLEVEL9K_NVM_BACKGROUND="238"
+POWERLEVEL9K_NVM_FOREGROUND="green"
+
+POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND="blue"
+POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_FOREGROUND="015"
+POWERLEVEL9K_TIME_BACKGROUND='255'
+POWERLEVEL9K_VIRTUALENV_BACKGROUND='orange3'
+
+# `vcs` color customization
+#POWERLEVEL9K_VCS_CLEAN_FOREGROUND='blue'
+POWERLEVEL9K_VCS_CLEAN_BACKGROUND='darkcyan'
+#POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='yellow'
+POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='mediumorchid3'
+#POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='red'
+POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='darkgoldenrod'
+
+# `vi_mode` color customization
+POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND='teal'
+#POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+#POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
+
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND='245'
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND='black'
+
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M}"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator dir newline context virtualenv vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(dir_writable status background_jobs command_execution_time time vi_mode os_icon ssh)
+POWERLEVEL9K_SHOW_CHANGESET=true
+
+HYPHEN_INSENSITIVE="true"
+COMPLETION_WAITING_DOTS="true"
+# /!\ do not use with zsh-autosuggestions
+
+plugins=(archlinux 
+	asdf 
+	bundler 
+	docker 
+	jsontools 
+	web-search 
+    virtualenv
+    virtualenvwrapper
+#	k 
+	tig 
+	gitfast 
+	colored-man-pages 
+	colorize 
+	command-not-found 
+	cp 
+	dirhistory 
+#	autojump 
+	sudo 
+    vi-mode
+#	zsh-syntax-highlighting
+	   
+)
+# /!\ zsh-syntax-highlighting and then zsh-autosuggestions must be at the end
+
+source $ZSH/oh-my-zsh.sh
+
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+typeset -gA ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[cursor]='bold'
+
+ZSH_HIGHLIGHT_STYLES[alias]='fg=green,bold'
+ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=green,bold'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=green,bold'
+ZSH_HIGHLIGHT_STYLES[function]='fg=green,bold'
+ZSH_HIGHLIGHT_STYLES[command]='fg=green,bold'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=green,bold'
+ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=green,bold'
+
+rule () {
+	print -Pn '%F{blue}'
+	local columns=$(tput cols)
+	for ((i=1; i<=columns; i++)); do
+	   printf "\u2588"
+	done
+	print -P '%f'
+}
+
+function _my_clear() {
+	echo
+	rule
+	zle clear-screen
+}
+zle -N _my_clear
+bindkey '^l' _my_clear
+
+# Ctrl-O opens zsh at the current location, and on exit, cd into ranger's last location.
+ranger-cd() {
+	tempfile=$(mktemp)
+	ranger --choosedir="$tempfile" "${@:-$(pwd)}" < $TTY
+	test -f "$tempfile" &&
+	if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
+	cd -- "$(cat "$tempfile")"
+	fi
+	rm -f -- "$tempfile"
+	# hacky way of transferring over previous command and updating the screen
+	VISUAL=true zle edit-command-line
+}
+zle -N ranger-cd
+bindkey '^o' ranger-cd
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+DISABLE_AUTO_UPDATE="true"
+
+ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
+if [[ ! -d $ZSH_CACHE_DIR ]]; then
+  mkdir $ZSH_CACHE_DIR
+fi
+
+source $ZSH/oh-my-zsh.sh
+
+# virtualenvwrapper
+export WORKON_HOME=~/.venvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+source /usr/bin/virtualenvwrapper.sh
+
+# path
+typeset -U PATH path
+path=("$HOME/.local/bin" "$HOME/.node_modules/bin" "$HOME/local/flutter/bin" "$HOME/bin" "$path[@]")
+export PATH
+
+# add keys for ssh
+eval "$(ssh-agent -s)";
+ssh-add ~/.ssh/id_rsa;
+ssh-add ~/.ssh/gitlab_personal;
+
+stop_all_dockers() {
+    docker stop $(docker ps -q)
+}
+
+
+feex(){
+    eval "$(ssh-agent -s)";
+    ssh-add ~/.ssh/id_rsa;
+    ssh-add ~/.ssh/gitlab_personal;
+    cd ~/Code/Feex/feex-mobile/
+}
+
+# OCTOPUS
+# Some useful envs
+export OCTO_DIR="$HOME/Code/Work/octo"
+export KRAKEN_DIR="$OCTO_DIR/kraken-core"
+
+export PGHOST=localhost
+export PGPORT=5432
+export PGUSER=postgres
+
+fixup(){
+    last_sha=$(git rev-parse --verify HEAD)
+    echo "Applying fixup to the SHA: $last_sha"
+    git commit --edit --fixup $last_sha
+}
+
+docker-stop() {
+    docker stop $(docker ps -q)
+}
+
+alias sup_sh="cd $OCTODEV_DIR; docker-compose run support bash; cd -"
+alias cons_bash="cd $OCTODEV_DIR; docker-compose run consumer bash; cd -"
+
+# Keep it last!
+source ~/.aliasesrc
+# Invoke tab-completion script to be sourced with the Z shell.
+# Known to work on zsh 5.0.x, probably works on later 4.x releases as well (as
+# it uses the older compctl completion system).
+
+_complete_invoke() {
+    # `words` contains the entire command string up til now (including
+    # program name).
+    #
+    # We hand it to Invoke so it can figure out the current context: spit back
+    # core options, task names, the current task's options, or some combo.
+    #
+    # Before doing so, we attempt to tease out any collection flag+arg so we
+    # can ensure it is applied correctly.
+    collection_arg=''
+    if [[ "${words}" =~ "(-c|--collection) [^ ]+" ]]; then
+        collection_arg=$MATCH
+    fi
+    # `reply` is the array of valid completions handed back to `compctl`.
+    # Use ${=...} to force whitespace splitting in expansion of
+    # $collection_arg
+    reply=( $(invoke ${=collection_arg} --complete -- ${words}) )
+}
+
+
+# Tell shell builtin to use the above for completing our given binary name(s).
+# * -K: use given function name to generate completions.
+# * +: specifies 'alternative' completion, where options after the '+' are only
+#   used if the completion from the options before the '+' result in no matches.
+# * -f: when function generates no results, use filenames.
+# * positional args: program names to complete for.
+compctl -K _complete_invoke + -f invoke inv
+
+# vim: set ft=sh :
