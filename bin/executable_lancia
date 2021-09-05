@@ -1,0 +1,19 @@
+#!/bin/bash
+PROGRAM=$1
+
+if [ -z $PROGRAM ]
+then
+    echo "You must pass a program to lunch"
+    exit
+fi
+
+# Terminate already running udiskie instances
+killall -q $PROGRAM
+
+# Wait until the processes have been shut down
+while pgrep -u $UID -x $PROGRAM >/dev/null; do sleep 1; done
+
+# Launch compton in background, using default config location ~/.config/compton/compton.conf
+$PROGRAM &
+
+echo "$PROGRAM launched..."

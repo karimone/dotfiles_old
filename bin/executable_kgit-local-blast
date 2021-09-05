@@ -1,0 +1,11 @@
+#!/bin/bash
+
+for BRANCH in $(git branch | grep -Ev "develop|release|master")
+do
+    read -p "Are you sure to delete >>>> $BRANCH? <<< " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        git branch -D $BRANCH
+    fi
+done

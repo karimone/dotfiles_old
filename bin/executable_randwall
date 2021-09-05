@@ -1,0 +1,12 @@
+#!/bin/sh
+HDMI="HDMI1"
+EDP="eDP1"
+P_PATH="$HOME/Pictures/wallpapers"
+P_EXCLUDE="$P_PATH/.git/"
+COMMAND="find $P_PATH -not -path '*/\.*' -type f -size +100k -follow -print | shuf -n 1"
+
+
+PIC=`eval $COMMAND`
+PIC2=`eval $COMMAND`
+
+xwallpaper --output $HDMI --stretch "${PIC}" --output $EDP --stretch "${PIC}"

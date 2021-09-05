@@ -1,0 +1,9 @@
+#!/bin/sh
+TMP=$HOME/.cache/corona
+CORONA_URL=https://corona-stats.online/aus
+curl -s $CORONA_URL > $TMP
+grep "Australia" $TMP |
+    sed "s/\x1b\[[0-9;]*m//g" |
+    sed "s/\s*//g; s/║//g; s/│/;/g;" |
+    #cut -d';' -f 4
+    awk -F';' '{print Aus"😷("$3") 🤧("$4") 💀("$5")" }' 
