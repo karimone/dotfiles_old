@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+if [ "$1" = "simple" ]; 
+then
+	git branch --merged | grep -v HEAD;
+
+else
+	for branch in `git branch -r --merged | grep -v HEAD`; 
+		do 
+			echo -e `git show --format="%ci %an" $branch | head -n 1` \\t$branch; 
+		done | sort -r
+fi
+

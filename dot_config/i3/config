@@ -1,0 +1,414 @@
+# #---Basic Definitions---# #
+for_window [class=".*"] border pixel 0
+hide_edge_borders both
+gaps inner 10
+gaps outer 5
+border_radius 5
+
+set $laptop eDP1
+set $external HDMI1
+
+# Mod4 = Windows Key
+set $alt Mod1
+set $sup Mod4
+set $mod Mod4
+
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+
+# cycle to windows
+bindsym $mod+Tab workspace back_and_forth
+
+
+# Set the terminal
+set $term kitty
+#set $term i3-sensible-terminal
+
+# Rofi application luncher
+set $menu rofi -show drun -show-icons
+set $window rofi -show window -show-icons
+
+# TODO: create a launcher script
+
+# polybar
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+
+# printer management
+exec_always --no-startup-id lancia system-config-printer-applet
+
+# printer management
+exec_always --no-startup-id lancia blueman-manager
+
+# mitico pcloud
+exec_always --no-startup-id lancia pcloud
+
+# copyq
+exec_always --no-startup-id lancia copyq
+
+# pulse audio appled
+exec_always --no-startup-id ~/bin/launch_pa.sh
+
+# network manager applet
+exec_always --no-startup-id nm-applet
+
+# exec_always --no-startup-id dropbox
+
+# picom
+exec_always --no-startup-id ~/bin/launch_picom.sh
+
+# udiskie
+exec_always --no-startup-id ~/bin/launch_udiskie.sh
+
+# to get the transparency
+#bindsym $mod+x exec --no-startup-id xcompmgr -c -C -t-5 -l-5 -r4.2 -o.55 -f
+#bindsym $mod+Shift+x exec --no-startup-id killall xcompmgr
+
+# set the wallpaper
+exec --no-startup-id ~/bin/randwall
+
+# call me again when you want
+bindsym $mod+w exec --no-startup-id ~/bin/randwall
+
+# emoji rofi
+bindsym $mod+e exec --no-startup-id ~/bin/emo.sh
+
+# notification system
+exec --no-startup-id dunst
+
+# font
+font pango:Inconsolata, DejaVu Sans Mono, Icons 9
+
+# start a terminal (h)
+bindsym $mod+Return split h; exec $term
+
+# start a terminal (v)
+bindsym $mod+Shift+Return split v; exec $term
+
+# start opera (h)
+bindsym $mod+o split h; exec chromium
+
+# start opera (h)
+bindsym $mod+Shift+o split v; exec chromium
+
+# start ranger
+bindsym $mod+r split h; exec $term ranger
+bindsym Ctrl+$mod+r split v; exec $term ranger
+
+# start gotop
+bindsym $mod+g split h; exec $term gotop -b -s
+bindsym Ctrl+$mod+g split v; exec $term gotop -b -s
+
+# start config editor
+#set $config_path "~/.config/i3/config"
+#bindsym $mod+e split h; exec $term nvim ~/.config/i3/config
+#bindsym Ctrl+$mod+e split v; exec $term nvim $config_path
+
+# start nvim on my docs TODO
+bindsym $mod+n split h; exec $term my
+bindsym Ctrl+$mod+n split v; exec $term my
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start your launcher
+bindsym $mod+d exec $menu
+
+bindsym $mod+Shift+d exec $window
+
+# reload the configuration file
+bindsym $mod+c reload
+
+# Move your focus around
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# _move_ the focused window with the same, but add Shift
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+#
+# Workspaces:
+#
+
+set $ws1 "01"
+set $ws2 "02"
+set $ws3 "03"
+set $ws4 "04"
+set $ws5 "05"
+set $ws6 "06"
+set $ws7 "07"
+set $ws8 "08"
+set $ws9 "09"
+set $ws0 "10"
+
+set $wsh1 "11"
+set $wsh2 "12"
+set $wsh3 "13"
+set $wsh4 "14"
+set $wsh5 "15"
+set $wsh6 "16"
+set $wsh7 "17"
+set $wsh8 "18"
+set $wsh9 "19"
+set $wsh0 "20"
+
+# define outputs
+
+workspace $ws1 output $laptop
+workspace $ws2 output $laptop
+workspace $ws3 output $laptop
+workspace $ws4 output $laptop
+workspace $ws5 output $laptop
+workspace $ws6 output $laptop
+workspace $ws7 output $laptop
+workspace $ws8 output $laptop
+workspace $ws9 output $laptop
+workspace $ws0 output $laptop
+
+workspace $wsh1 output $external
+workspace $wsh2 output $external
+workspace $wsh3 output $external
+workspace $wsh4 output $external
+workspace $wsh5 output $external
+workspace $wsh6 output $external
+workspace $wsh7 output $external
+workspace $wsh8 output $external
+workspace $wsh9 output $external
+workspace $wsh0 output $external
+
+# switch to workspace
+
+bindsym $mod+F1 workspace $wsh1
+bindsym $mod+F2 workspace $wsh2
+bindsym $mod+F3 workspace $wsh3
+bindsym $mod+F4 workspace $wsh4
+bindsym $mod+F5 workspace $wsh5
+bindsym $mod+F6 workspace $wsh6
+bindsym $mod+F7 workspace $wsh7
+bindsym $mod+F8 workspace $wsh8
+bindsym $mod+F9 workspace $wsh9
+bindsym $mod+F10 workspace $wsh0
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws0
+
+# move focused container to workspace
+bindsym $mod+Shift+F1 move container to workspace $wsh1
+bindsym $mod+Shift+F2 move container to workspace $wsh2
+bindsym $mod+Shift+F3 move container to workspace $wsh3
+bindsym $mod+Shift+F4 move container to workspace $wsh4
+bindsym $mod+Shift+F5 move container to workspace $wsh5
+bindsym $mod+Shift+F6 move container to workspace $wsh6
+bindsym $mod+Shift+F7 move container to workspace $wsh7
+bindsym $mod+Shift+F8 move container to workspace $wsh8
+bindsym $mod+Shift+F9 move container to workspace $wsh9
+bindsym $mod+Shift+F10 move container to workspace $wsh0
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws0
+
+# Layout stuff:
+# You can "split" the current object of your focus with
+# $mod+b or $mod+v, for horizontal and vertical splits
+# respectively.
+bindsym $mod+b splith
+bindsym $mod+v splitv
+
+# Switch the current container between different layout styles
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+p layout toggle split
+
+# Make the current focus fullscreen
+bindsym $mod+f fullscreen
+
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+Shift+space floating toggle
+
+# Swap focus between the tiling area and the floating area
+bindsym $mod+space focus mode_toggle
+
+# move focus to the parent container
+bindsym $mod+a focus parent
+
+## Floating
+#floating_minimum_size 1067 x 600
+#floating_maximum_size 1366 x 768
+
+## Assignments
+#
+# assign [class="Chromium"] $wsh1
+# assign [class="jetbrains-pycharm"] $wsh2
+
+# for_window [class="Spotify"] move container to workspace $ws2
+# assign [class="Slack"] $wsh4
+# assign [class="Franz"] $wsh4
+# assign [class="TelegramDesktop"] $ws5
+
+#
+# Scratchpad:
+#
+# Sway has a "scratchpad", which is a bag of holding for windows.
+# You can send windows there and get them back later.
+
+# Move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+#bindsym $mod+h move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+#bindsym $mod+Shift+h scratchpad show
+#
+# Resizing containers:
+#
+#
+set $resize "Resize container (h) left (k) up (j) down (l) right"
+mode $resize {
+    bindsym $mod+h resize shrink width 10px
+    bindsym $mod+l resize grow width 10px
+
+    bindsym $mod+k resize grow height 10px
+    bindsym $mod+j resize shrink height 10px
+
+    # return to default mode
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+bindsym $mod+Shift+r mode $resize
+
+#
+# Status Bar:
+# bar {
+# 	colors {
+# 		background #000000
+# 		statusline #dddddd 
+# 		separator #666666
+# 		focused_workspace  #4c7899 #285577 #ffffff
+# 		active_workspace   #333333 #5f676a #ffffff
+# 		inactive_workspace #333333 #222222 #888888
+# 		urgent_workspace   #2f343a #900000 #ffffff
+#     }
+# 
+#     	font pango:Font Awesome, Inconsolata, Icons 12
+#     	position top
+#     	status_command i3blocks
+#     	workspace_buttons yes
+# }
+
+# restart i3-msg
+bindsym $mod+i exec i3-msg restart
+bindsym Shift+$mod+i exec i3-msg reload
+
+# lock
+bindsym $mod+z exec --no-startup-id i3lock-fancy-dualmonitor
+
+# session
+set $session_message "(L)ock, (S)uspend, (R)eboot, (P)oweroff"
+mode $session_message {
+    bindsym $mod+l exec --no-startup-id i3lock-fancy-dualmonitor
+    bindsym $mod+s exec systemctl suspend, mode "default"
+    bindsym $mod+r exec systemctl reboot, mode "default"
+    bindsym $mod+p exec systemctl shutdown, mode "default"
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+
+bindsym $mod+Shift+s mode $session_message
+
+#bindsym --release Caps_Lock exec pkill -SIGRTMIN+10 i3blocks
+#bindsym --release Num_Lock  exec pkill -SIGRTMIN+10 i3blocks
+
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
+
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+
+# Touchpad controls
+bindsym XF86TouchpadToggle exec toggletouchpad # toggle touchpad
+
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioPause exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Screenshot and other tools
+set $tool_display Screenshot (F)ullscreen (S)election (C)lipboard Selection
+mode "$tool_display" {
+    bindsym --release s exec scrot '%Y-%m-%d_$wx$h_selection.png' -s -e 'mv $f ~/Pictures/shots/' && notify-send "selection saved in Pictures/shots", mode "default"
+    bindsym --release f exec screenshot, mode "default"
+    bindsym --release c exec scrot '/tmp/%F_%T_$wx$h.png' -s -e 'xclip -selection clipboard -target image/png -i $f', mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+t mode "$tool_display"
+
+# Notify management
+set $notify_management Notify (E)nable / (D)isable
+mode "$notify_management" {
+    bindsym --release e exec notify-send "DUNST_COMMAND_RESUME" && notify-send "Notification resumed", mode "default
+    bindsym --release d exec notify-send -u critical -t 1800 "Nofitication paused" && sleep 2 && notify-send "DUNST_COMMAND_PAUSE", mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+n mode "$notify_management"
+
+## Manual management of external displays
+set $mode_display External monitor: (k) above, (j) below, (h) right, (l) left, (p) laptop, (e), external,
+mode "$mode_display" {
+    bindsym h exec --no-startup-id xrandr --output $external --auto --left-of $laptop, mode "default"
+    bindsym j exec --no-startup-id xrandr --output $external --auto --below $laptop, mode "default"
+    bindsym k exec --no-startup-id xrandr --output $external --auto --above $laptop, mode "default"
+    bindsym l exec --no-startup-id xrandr --output $external --auto --right-of $laptop, mode "default"
+    bindsym p exec --no-startup-id xrandr --output $external --off, mode "default"
+    bindsym e exec --no-startup-id xrandr --output $external --auto --output $laptop --off, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+# Declare here the shortcut to bring the display selection menu
+bindsym $mod+Shift+m mode "$mode_display"
+
+# avoid the focus on mouse movement
+focus_follows_mouse no  
+
+
+# Specific config for windows
+for_window [class="zoom"] floating disable
+for_window [title=".*Emulator.*"] floating enable
+# start terminal as scratchpad (DOESN'T WORK)
+# bindsym $mod+u exec --no-startup-id kitty --name kitty_scratchpad  --class kitty_scratchpad tmux -f /home/karim/.config/tmux/config
+# for_window [instance="kitty_scratchpad"] floating enable; resize set 800 600; move scratchpad; scratchpad show; move position center;
+# for_window [class="kitty_scratchpad"] floating enable; resize shrink down 200px; resize shrink right 100px; move scratchpad; scratchpad show; move position center;
+
+

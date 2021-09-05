@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+for branch in `git branch | grep -v \*`; 
+   do 
+   echo ">>>> $branch"
+		   echo "   > $(git branch --contains $branch)"; 
+	done
+

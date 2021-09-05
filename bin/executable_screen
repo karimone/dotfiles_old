@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# for the biggest monitor
+# jabra output
+ffmpeg -video_size 1920x1080 -framerate 25 -f x11grab -i :0.0 -f pulse -ac 2 -i 5 output.mkv

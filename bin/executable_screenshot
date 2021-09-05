@@ -1,0 +1,4 @@
+#!/bin/sh
+filename=$(echo "`date +"%Y-%m-%d_%H%M"`.png")  
+path="$HOME/Pictures/shots/$filename"
+scrot $filename && mv $filename $path && notify-send "Screenshot saved in $path"

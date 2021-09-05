@@ -1,0 +1,6 @@
+#!/bin/sh
+echo "restarting bluetooth module..."
+sudo rfkill block bluetooth 
+sudo rfkill unblock bluetooth
+sudo systemctl restart bluetooth
+echo ".done"
