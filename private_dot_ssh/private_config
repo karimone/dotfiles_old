@@ -1,0 +1,3 @@
+Host gitlab.com
+  HostName gitlab.com
+  IdentityFile ~/.ssh/gitlab_personal
