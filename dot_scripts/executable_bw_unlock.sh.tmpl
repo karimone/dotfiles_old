@@ -1,15 +1,13 @@
 #!/bin/sh
 
-# FIXME: the check of the binary can be done much better using bw or directly the package manager
-{{ if (eq .chezmoi.os "darwin") }}
 BW_BIN=$(where bw)
+
+{{ if (eq .chezmoi.os "darwin") }}
 INSTALL_COMAND="brew install bitwarden-cli"
 {{ else if (eq .chezmoi.os "linux" ) }}
-BW_BIN=$(whereis bw)
 INSTALL_COMAND="yay -S bitwarden-cli"
 {{ else }}
 # TODO: other operating system
-BW_BIN=$(whereis bw)
 INSTALL_COMAND="yay -S bitwarden-cli"
 {{ end }}
 
