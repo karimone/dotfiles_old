@@ -1,9 +1,0 @@
-#!/bin/sh
-# Script to add file items on bitwarden 
-# TODO add a check for the parameters
-NAME="$1"
-FILE="$2"
-NOTES=$(sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/\\\\n/g' "$FILE")
-
-bw get template item | jq --arg name "$NAME" '.name=$name' | jq --arg notes "$NOTES" '.notes=$notes'
-
