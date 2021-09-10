@@ -3,6 +3,7 @@
 BW_SESSION_FILE="$HOME/.bw-session"
 BW_BIN="/usr/bin/bw"
 VAULT_UNLOCKED="Vault is unlocked!"
+LOGGED_IN="You are logged in!"
 
 
 if [[ ! -f "$BW_BIN" ]];
@@ -17,6 +18,20 @@ generate_session_file() {
     echo "$KEY" > "$BW_SESSION_FILE"
 }
 
+generate_session_file_from_login() {
+    echo "Generate BW_SESSION after login"
+    KEY="$(bw login --raw)"
+    echo "$KEY" > "$BW_SESSION_FILE"
+}
+
+
+LOGGED_STATUS=$(bw login --check)
+
+if [ "$LOGGED_STATUS" != "$LOGGED_IN" ]; then
+    # is not logged in
+    generate_session_file_from_login;
+    export BW_SESSION="$(cat $BW_SESSION_FILE)"
+fi
 
 if [[ ! -f "$BW_SESSION_FILE" ]]
 then
