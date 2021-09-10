@@ -1,0 +1,25 @@
+[alias]
+	co = checkout
+	ci = commit
+	st = status -sb
+	br = branch
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	type = cat-file -t
+	dump = cat-file -p
+	mr = merge --no-ff
+
+[user]
+	email = {{ (bitwardenFields "item" "dot_gitconfig").email.value }}
+	name = {{ (bitwardenFields "item" "dot_gitconfig").name.value }}
+
+[color]
+	ui = true
+
+[push]
+	default = simple
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main
+[core]
+	autocrlf = input
