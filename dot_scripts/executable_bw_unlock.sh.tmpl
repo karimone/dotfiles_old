@@ -1,5 +1,18 @@
 #!/bin/sh
 
+# FIXME: the check of the binary can be done much better using bw or directly the package manager
+{{ if (eq .chezmoi.os "darwin") }}
+BW_BIN="/usr/local/bin/bw"
+INSTALL_COMAND="brew install bitwarden-cli"
+{{ else if (eq .chezmoi.os "linux" ) }}
+BW_BIN="/usr/bin/bw"
+INSTALL_COMAND="yay -S bitwarden-cli"
+{{ else }}
+# TODO: other operating system
+BW_BIN="/usr/bin/bw"
+INSTALL_COMAND="yay -S bitwarden-cli"
+{{ end }}
+
 BW_SESSION_FILE="$HOME/.bw-session"
 BW_BIN="/usr/bin/bw"
 VAULT_UNLOCKED="Vault is unlocked!"
@@ -9,7 +22,7 @@ LOGGED_IN="You are logged in!"
 if [[ ! -f "$BW_BIN" ]];
 then
     echo "Install bw-cli"
-    yay -S bitwarden-cli
+    sh -c "$INSTALL_COMAND"
 fi
 
 generate_session_file() {
