@@ -1,3 +1,5 @@
+SCRIPTS_DIR="$HOME/.scripts"
+
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/karim/.zshrc'
 
@@ -234,5 +236,11 @@ _complete_invoke() {
 # * -f: when function generates no results, use filenames.
 # * positional args: program names to complete for.
 compctl -K _complete_invoke + -f invoke inv
+
+# load scripts
+for script in $(ls -1 "$SCRIPTS_DIR"); do
+    echo "Loading $script"
+    source "$SCRIPTS_DIR/$script"
+done;
 
 # vim: set ft=sh :
