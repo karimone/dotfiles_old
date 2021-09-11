@@ -6,4 +6,5 @@ git@github.com:octoenergy/kraken-vagrant.git,Code/octopus/,The vagrant project a
 git@github.com:octoenergy/kraken-core.git,Code/octopus/,The Kraken
 git@github.com:karimone/personal.git,Documents/,My personal docs
 git@github.com:karimone/alis.git,Code/devops/,My ongoing alis installer
-
+git@gitlab.com:karimone/gorjux.net.git,Code/websites,My personal blog
+git@gitlab.com:karimone/karimblog.git,Code/websites,My historical blog
