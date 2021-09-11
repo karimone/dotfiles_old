@@ -1,10 +1,9 @@
-uri,folder,description
-git@github.com:feex-au/mario-project.git, Code/feex/, Mario the Feex app
-git@github.com:feex-au/feex-mobile.git, Code/feex/, Flutter Feex mobile app
-git@github.com:feex-au/feex-website.git, Code/feex, Feex website
-git@github.com:feex-au/lambda.git, Code/feex, Feex lambda
-git@github.com:octoenergy/kraken-vagrant.git, Code/octopus/, The vagrant project at Octopus
-git@github.com:octoenergy/kraken-core.git, Code/octopus/, The Kraken
-git@github.com:karimone/personal.git, Documents/, My personal docs
-git@github.com:karimone/alis.git, Code/devops/, My ongoing alis installer
+git@github.com:feex-au/mario-project.git,Code/feex/,Mario the Feex app
+git@github.com:feex-au/feex-mobile.git,Code/feex/,Flutter Feex mobile app
+git@github.com:feex-au/feex-website.git,Code/feex,Feex website
+git@github.com:feex-au/lambda.git,Code/feex,Feex lambda
+git@github.com:octoenergy/kraken-vagrant.git,Code/octopus/,The vagrant project at Octopus
+git@github.com:octoenergy/kraken-core.git,Code/octopus/,The Kraken
+git@github.com:karimone/personal.git,Documents/,My personal docs
+git@github.com:karimone/alis.git,Code/devops/,My ongoing alis installer
 
