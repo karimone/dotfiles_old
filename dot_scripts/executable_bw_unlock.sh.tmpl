@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BW_BIN=$(where bw)
+BW_BIN=$(where bw| head -1)
 
 {{ if (eq .chezmoi.os "darwin") }}
 INSTALL_COMAND="brew install bitwarden-cli"
