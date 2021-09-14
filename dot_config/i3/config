@@ -1,12 +1,15 @@
 # #---Basic Definitions---# #
-for_window [class=".*"] border pixel 0
-hide_edge_borders both
+# for_window [class=".*"] border pixel 0
+default_border none
+default_floating_border pixel 10
+#hide_edge_borders both
 gaps inner 10
 gaps outer 5
-border_radius 5
+border_radius 7
 
-set $laptop eDP1
-set $external HDMI1
+
+set $laptop HDMI-A-0
+set $external HDMI-A-0
 
 # Mod4 = Windows Key
 set $alt Mod1
@@ -21,7 +24,6 @@ set $right l
 
 # cycle to windows
 bindsym $mod+Tab workspace back_and_forth
-
 
 # Set the terminal
 set $term kitty
@@ -136,31 +138,30 @@ bindsym $mod+Shift+$right move right
 #
 # Workspaces:
 #
-
 set $ws1 "01"
+set $web $ws1
+
 set $ws2 "02"
+set $chat $ws2
+
 set $ws3 "03"
+set $music $ws3
+
 set $ws4 "04"
+set $dev $ws4
+
 set $ws5 "05"
+set $tools $ws5
 set $ws6 "06"
 set $ws7 "07"
 set $ws8 "08"
 set $ws9 "09"
 set $ws0 "10"
 
-set $wsh1 "11"
-set $wsh2 "12"
-set $wsh3 "13"
-set $wsh4 "14"
-set $wsh5 "15"
-set $wsh6 "16"
-set $wsh7 "17"
-set $wsh8 "18"
-set $wsh9 "19"
-set $wsh0 "20"
+# default layout
+workspace_layout tabbed
 
 # define outputs
-
 workspace $ws1 output $laptop
 workspace $ws2 output $laptop
 workspace $ws3 output $laptop
@@ -172,30 +173,7 @@ workspace $ws8 output $laptop
 workspace $ws9 output $laptop
 workspace $ws0 output $laptop
 
-workspace $wsh1 output $external
-workspace $wsh2 output $external
-workspace $wsh3 output $external
-workspace $wsh4 output $external
-workspace $wsh5 output $external
-workspace $wsh6 output $external
-workspace $wsh7 output $external
-workspace $wsh8 output $external
-workspace $wsh9 output $external
-workspace $wsh0 output $external
-
 # switch to workspace
-
-bindsym $mod+F1 workspace $wsh1
-bindsym $mod+F2 workspace $wsh2
-bindsym $mod+F3 workspace $wsh3
-bindsym $mod+F4 workspace $wsh4
-bindsym $mod+F5 workspace $wsh5
-bindsym $mod+F6 workspace $wsh6
-bindsym $mod+F7 workspace $wsh7
-bindsym $mod+F8 workspace $wsh8
-bindsym $mod+F9 workspace $wsh9
-bindsym $mod+F10 workspace $wsh0
-
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
@@ -208,17 +186,6 @@ bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws0
 
 # move focused container to workspace
-bindsym $mod+Shift+F1 move container to workspace $wsh1
-bindsym $mod+Shift+F2 move container to workspace $wsh2
-bindsym $mod+Shift+F3 move container to workspace $wsh3
-bindsym $mod+Shift+F4 move container to workspace $wsh4
-bindsym $mod+Shift+F5 move container to workspace $wsh5
-bindsym $mod+Shift+F6 move container to workspace $wsh6
-bindsym $mod+Shift+F7 move container to workspace $wsh7
-bindsym $mod+Shift+F8 move container to workspace $wsh8
-bindsym $mod+Shift+F9 move container to workspace $wsh9
-bindsym $mod+Shift+F10 move container to workspace $wsh0
-
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $ws2
 bindsym $mod+Shift+3 move container to workspace $ws3
@@ -260,13 +227,19 @@ bindsym $mod+a focus parent
 
 ## Assignments
 #
-# assign [class="Chromium"] $wsh1
-# assign [class="jetbrains-pycharm"] $wsh2
+assign [title="Chromium"] $ws1
+assign [class="Brave-browser"] $ws1
+assign [title="Google Chrome"] $ws1
 
-# for_window [class="Spotify"] move container to workspace $ws2
-# assign [class="Slack"] $wsh4
-# assign [class="Franz"] $wsh4
-# assign [class="TelegramDesktop"] $ws5
+assign [class="TelegramDesktop"] $ws2
+assign [class="Slack"] $ws2
+
+assign [class="Spotify"] $ws3
+assign [instance="Spotify"] $ws3
+assign [title="Spotify"] $ws3
+for_window [class="Spotify"] move to workspace $ws3
+
+assign [class="jetbrains-pycharm"] $ws4
 
 #
 # Scratchpad:
@@ -339,9 +312,6 @@ mode $session_message {
 
 bindsym $mod+Shift+s mode $session_message
 
-#bindsym --release Caps_Lock exec pkill -SIGRTMIN+10 i3blocks
-#bindsym --release Num_Lock  exec pkill -SIGRTMIN+10 i3blocks
-
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
@@ -404,8 +374,9 @@ focus_follows_mouse no
 
 
 # Specific config for windows
-for_window [class="zoom"] floating disable
+#for_window [class="zoom"] floating enable
 for_window [title=".*Emulator.*"] floating enable
+for_window [class="blueman-manager"] floating enable
 # start terminal as scratchpad (DOESN'T WORK)
 # bindsym $mod+u exec --no-startup-id kitty --name kitty_scratchpad  --class kitty_scratchpad tmux -f /home/karim/.config/tmux/config
 # for_window [instance="kitty_scratchpad"] floating enable; resize set 800 600; move scratchpad; scratchpad show; move position center;
