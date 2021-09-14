@@ -1,0 +1,23 @@
+[bar/main]
+modules-left = text 
+
+[bar/main1]
+inherit = bar/main
+font-0 = "NotoColorEmoji:scale=10"
+
+[bar/main2]
+inherit = bar/main
+font-0 = "JetBrainsMono NF"
+
+[bar/main3]
+inherit = bar/main
+font-0 = "JetBrainsMono NF"
+font-1 = "NotoColorEmoji:scale=10"
+
+[bar/main4]
+inherit = bar/main
+font-0 = "NotoColorEmoji:scale=1"
+
+[module/text]
+type = custom/text
+content = 🔥😀😃😄😁😆😅
