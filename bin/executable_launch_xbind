@@ -1,0 +1,4 @@
+#!/bin/sh
+killall xbindkeys
+
+xbindkeys -f $HOME/.config/xbindkeysrc 
