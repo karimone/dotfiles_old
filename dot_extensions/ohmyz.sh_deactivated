@@ -1,0 +1,51 @@
+# /!\ do not use with zsh-autosuggestions
+#
+ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
+if [[ ! -d $ZSH_CACHE_DIR ]]; then
+  mkdir $ZSH_CACHE_DIR
+fi
+
+
+plugins=(archlinux 
+	asdf 
+	bundler 
+	docker 
+	jsontools 
+	web-search 
+    virtualenv
+    virtualenvwrapper
+#	k 
+	tig 
+	gitfast 
+	colored-man-pages 
+	colorize 
+	command-not-found 
+	cp 
+	dirhistory 
+#	autojump 
+	sudo 
+    vi-mode
+#	zsh-syntax-highlighting
+	   
+)
+# /!\ zsh-syntax-highlighting and then zsh-autosuggestions must be at the end
+
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+typeset -gA ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[cursor]='bold'
+
+ZSH_HIGHLIGHT_STYLES[alias]='fg=green,bold'
+ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=green,bold'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=green,bold'
+ZSH_HIGHLIGHT_STYLES[function]='fg=green,bold'
+ZSH_HIGHLIGHT_STYLES[command]='fg=green,bold'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=green,bold'
+ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=green,bold'
+
+# Path to your oh-my-zsh installation.
+export ZSH=/usr/share/oh-my-zsh/
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+export DISABLE_AUTO_UPDATE="true"
+
+source $ZSH/oh-my-zsh.sh

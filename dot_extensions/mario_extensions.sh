@@ -1,5 +1,5 @@
-export MARIO_PROJECT="$HOME/Code/Feex/mario-project"
-export MARIO_ANSIBLE="/Users/karim/Code/Feex/ansible-django-stack"
+export MARIO_PROJECT="$HOME/Code/feex/mario-project"
+export MARIO_ANSIBLE="$HOME/Code/feex/ansible-django-stack"
 export MARIO_ENV="feex"
 export MARIO_DB="mario"
 export MARIO_ENV_PATH="$VIRTUALENVWRAPPER_HOOK_DIR/$MARIO_ENV"
@@ -13,6 +13,15 @@ mario() {
     fi
 }
 
+mario-pip-compile() {
+    cd $MARIO_PROJECT
+    echo "Compile requirements.in ..."
+    pip-compile requirements.in --output-file=- > requirements.txt
+    echo "Compile requirements.dev.in ..."
+    pip-compile requirements.dev.in --output-file=- > requirements.dev.txt
+    echo "Done."
+}
+
 alias m="mario"
 alias me="vim ~/.mario_extensions.sh"
 alias re="source ~/.mario_extensions.sh"
@@ -23,9 +32,10 @@ alias mario-server="mario-command runserver 0.0.0.0:8003"
 alias mario-tailwind="mario-command tailwind start"
 alias mario-migrate="mario-command migrate"
 alias mario-makemigrations="mario-command makemigrations"
-alias mario-instance="ssh ubuntu@app.feex.com.au"
+alias mario-instance="ssh -i ~/.ssh/id_rsa ubuntu@app.feex.com.au"
 alias mario-clean="inv clean"
 alias mario-tests="inv run-tests"
+alias mario-install="mario && pip install -r requirements.dev.txt"
 
 mario-recreate-db() {
     dropdb "$MARIO_DB" && createdb "$MARIO_DB"
@@ -46,13 +56,9 @@ mario-recreate() {
 }
 
 
-mario-install() { 
-    cd $MARIO_PROJECT;
-    pip install $1 && pip freeze | grep $1 >> requirements.txt
-    cd -
-}
 
 mario-deploy(){
+    mario;
     cd "$MARIO_ANSIBLE" 
     echo "Deploying Mario ..."
     ansible-playbook --ssh-extra-args=-A -i development site.yml --tags=deploy

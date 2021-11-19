@@ -1,6 +1,6 @@
-export OP_SESSION_octoenergy="r05QV3k7RNBk0c4QWGLW005kJdYm1bknQGtEmKKS4CU"
 
-export OCTODIR="$HOME/Code/Octo"
+export RANGER_LOAD_DEFAULT_RC=0
+export OCTODIR="$HOME/Code/octopus"
 export OCTODEV="$OCTODIR/octodev"
 export KRAKEN="$OCTODIR/kraken-core"
 export KRAKEN_VAGRANT="$OCTODIR/kraken-vagrant"
@@ -12,7 +12,7 @@ export OCTODB=octo-consumer
 
 # aliases
 alias ls="exa"
-alias l="ls -lh"
+alias l="ls -lhg"
 alias ll="l -a"
 alias lt="l --tree"
 alias llt="ll --tree"
