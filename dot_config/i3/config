@@ -1,12 +1,12 @@
 # #---Basic Definitions---# #
-# for_window [class=".*"] border pixel 0
-default_border none
-default_floating_border pixel 10
-#hide_edge_borders both
-gaps inner 10
-gaps outer 5
-border_radius 7
 
+# this config is necessary otherwise no gaps!
+for_window [class=".*"] border pixel 0
+default_floating_border pixel 5
+
+gaps inner 15
+gaps bottom 25
+border_radius 10
 
 set $laptop HDMI-A-0
 set $external HDMI-A-0
@@ -64,14 +64,16 @@ exec_always --no-startup-id ~/bin/launch_picom.sh
 # udiskie
 exec_always --no-startup-id ~/bin/launch_udiskie.sh
 
-# to get the transparency
-#bindsym $mod+x exec --no-startup-id xcompmgr -c -C -t-5 -l-5 -r4.2 -o.55 -f
-#bindsym $mod+Shift+x exec --no-startup-id killall xcompmgr
+# xbindkeys for the buttons
+exec_always --no-startup-id ~/bin/launch_xbind
+
+# This is a fix for zoom when screensharing
+# exec_always --no-startup-id xcompmgr -c -l0 -t0 -r0 -o.00
 
 # set the wallpaper
 exec --no-startup-id ~/bin/randwall
 
-# call me again when you want
+# Reset the wallpaper randomly
 bindsym $mod+w exec --no-startup-id ~/bin/randwall
 
 # emoji rofi
@@ -81,7 +83,7 @@ bindsym $mod+e exec --no-startup-id ~/bin/emo.sh
 exec --no-startup-id dunst
 
 # font
-font pango:Inconsolata, DejaVu Sans Mono, Icons 9
+font pango:Inconsolata, Ubuntu Mono 14
 
 # start a terminal (h)
 bindsym $mod+Return split h; exec $term
@@ -89,11 +91,8 @@ bindsym $mod+Return split h; exec $term
 # start a terminal (v)
 bindsym $mod+Shift+Return split v; exec $term
 
-# start opera (h)
-bindsym $mod+o split h; exec chromium
-
-# start opera (h)
-bindsym $mod+Shift+o split v; exec chromium
+# Toggle copyq
+bindsym $mod+Shift+c exec copyq toggle
 
 # start ranger
 bindsym $mod+r split h; exec $term ranger
@@ -102,15 +101,6 @@ bindsym Ctrl+$mod+r split v; exec $term ranger
 # start gotop
 bindsym $mod+g split h; exec $term gotop -b -s
 bindsym Ctrl+$mod+g split v; exec $term gotop -b -s
-
-# start config editor
-#set $config_path "~/.config/i3/config"
-#bindsym $mod+e split h; exec $term nvim ~/.config/i3/config
-#bindsym Ctrl+$mod+e split v; exec $term nvim $config_path
-
-# start nvim on my docs TODO
-bindsym $mod+n split h; exec $term my
-bindsym Ctrl+$mod+n split v; exec $term my
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -207,6 +197,7 @@ bindsym $mod+v splitv
 # Switch the current container between different layout styles
 bindsym $mod+s layout stacking
 bindsym $mod+t layout tabbed
+bindsym $mod+n layout default
 bindsym $mod+p layout toggle split
 
 # Make the current focus fullscreen
@@ -225,21 +216,6 @@ bindsym $mod+a focus parent
 #floating_minimum_size 1067 x 600
 #floating_maximum_size 1366 x 768
 
-## Assignments
-#
-assign [title="Chromium"] $ws1
-assign [class="Brave-browser"] $ws1
-assign [title="Google Chrome"] $ws1
-
-assign [class="TelegramDesktop"] $ws2
-assign [class="Slack"] $ws2
-
-assign [class="Spotify"] $ws3
-assign [instance="Spotify"] $ws3
-assign [title="Spotify"] $ws3
-for_window [class="Spotify"] move to workspace $ws3
-
-assign [class="jetbrains-pycharm"] $ws4
 
 #
 # Scratchpad:
@@ -273,31 +249,13 @@ mode $resize {
 }
 bindsym $mod+Shift+r mode $resize
 
-#
-# Status Bar:
-# bar {
-# 	colors {
-# 		background #000000
-# 		statusline #dddddd 
-# 		separator #666666
-# 		focused_workspace  #4c7899 #285577 #ffffff
-# 		active_workspace   #333333 #5f676a #ffffff
-# 		inactive_workspace #333333 #222222 #888888
-# 		urgent_workspace   #2f343a #900000 #ffffff
-#     }
-# 
-#     	font pango:Font Awesome, Inconsolata, Icons 12
-#     	position top
-#     	status_command i3blocks
-#     	workspace_buttons yes
-# }
 
 # restart i3-msg
 bindsym $mod+i exec i3-msg restart
 bindsym Shift+$mod+i exec i3-msg reload
 
 # lock
-bindsym $mod+z exec --no-startup-id i3lock-fancy-dualmonitor
+bindsym $mod+z exec --no-startup-id i3lock
 
 # session
 set $session_message "(L)ock, (S)uspend, (R)eboot, (P)oweroff"
@@ -335,7 +293,7 @@ set $tool_display Screenshot (F)ullscreen (S)election (C)lipboard Selection
 mode "$tool_display" {
     bindsym --release s exec scrot '%Y-%m-%d_$wx$h_selection.png' -s -e 'mv $f ~/Pictures/shots/' && notify-send "selection saved in Pictures/shots", mode "default"
     bindsym --release f exec screenshot, mode "default"
-    bindsym --release c exec scrot '/tmp/%F_%T_$wx$h.png' -s -e 'xclip -selection clipboard -target image/png -i $f', mode "default"
+    bindsym --release c exec /home/karim/bin/screenshot, mode "default"
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -374,12 +332,38 @@ focus_follows_mouse no
 
 
 # Specific config for windows
-#for_window [class="zoom"] floating enable
+
+## Assignments
+assign [title="Chromium"] $ws1
+assign [class="Brave-browser"] $ws1
+assign [title="Google Chrome"] $ws1
+assign [class="firefox"] $ws1
+
+assign [class="TelegramDesktop"] $ws2
+assign [class="Slack"] $ws2
+assign [class="Whatsapp-for-linux"] $ws2
+assign [class="Signal"] $ws2
+assign [class="Whatsapp*"] $ws2
+
+assign [class="Spotify"] $ws3
+assign [instance="Spotify"] $ws3
+assign [title="Spotify"] $ws3
+
+assign [class="jetbrains-pycharm"] $ws4
+assign [class="VSCodium"] $ws4
+
+# it doesn't work!
+for_window [class="Spotify"] move to workspace $ws3
+set $Float floating enable, border pixel 3
+set $stickyFloat floating enable, sticky enable, border pixel 5
 for_window [title=".*Emulator.*"] floating enable
-for_window [class="blueman-manager"] floating enable
-# start terminal as scratchpad (DOESN'T WORK)
-# bindsym $mod+u exec --no-startup-id kitty --name kitty_scratchpad  --class kitty_scratchpad tmux -f /home/karim/.config/tmux/config
-# for_window [instance="kitty_scratchpad"] floating enable; resize set 800 600; move scratchpad; scratchpad show; move position center;
-# for_window [class="kitty_scratchpad"] floating enable; resize shrink down 200px; resize shrink right 100px; move scratchpad; scratchpad show; move position center;
-
-
+for_window [class="Blueman-manager"] $stickyFloat
+for_window [class="copyq"] $stickyFloat
+for_window [class="zoom"] $stickyFloat
+for_window [class="Thunar"] $Float
+for_window [class="Sxiv"] $Float
+for_window [class="mpv"] $Float
+for_window [class="feh"] $Float
+for_window [class="Bitwarden"] $Float
+for_window [class="zoom"] [title="Zoom Meeting"] $stickyFloat, move position center
+for_window [class="zoom"] [title="Chat"] $stickyFloat, move position mouse
