@@ -72,13 +72,13 @@ export CHROME_EXECUTABLE="/usr/bin/google-chrome-stable"
 
 source /usr/share/nvm/init-nvm.sh
 
-# starship. See how it goes
-eval "$(starship init zsh)"
-# Keep it last!
-
 source ~/.aliasesrc
 
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
+
+# Keep it last!
+eval "$(starship init zsh)"
+
 # vim: set ft=sh :
 
